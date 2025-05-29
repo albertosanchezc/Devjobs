@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vacante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class VacanteController extends Controller
 {
@@ -47,6 +48,11 @@ class VacanteController extends Controller
     public function edit(Vacante $vacante)
     {
         //
+        // $this->authorize('update', $vacante); anteriormente se hacía así
+        Gate::authorize('update', $vacante); // nueva forma usando Gate de facades
+
+
+        
         return view('vacantes.edit',[
             'vacante' => $vacante
         ]);
