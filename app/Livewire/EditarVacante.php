@@ -55,7 +55,7 @@ class EditarVacante extends Component
 
         // Si hay una nueva imagen
         if ($this->imagen_nueva) {
-            $imagen = $this->imagen_nueva->store('vacantes', 'public');;
+            $imagen = $this->imagen_nueva->store('vacantes', 'public');
 
             $datos['imagen'] = str_replace('vacantes/','', $imagen);// eliminamos el nombre de la carpeta del nombre de la imagen
             Storage::delete('public/vacantes/' . $vacante->imagen );
