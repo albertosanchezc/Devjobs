@@ -15,11 +15,10 @@
                 <a href="#"
                     class="bg-slate-800 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center">Candidatos</a>
 
-                <a href="{{ route('vacantes.edit', $vacante->id)}}"
+                <a href="{{ route('vacantes.edit', $vacante->id) }}"
                     class="bg-blue-800 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center">Editar</a>
-
-                <a href="#"
-                    class="bg-red-600 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center">Eliminar</a>
+                <button wire:click="$dispatch('mostrarAlerta', {{ $vacante->id }} )"
+                    class="bg-red-600 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center">Eliminar</button>
             </div>
         </div>
 
@@ -31,3 +30,32 @@
         {{ $vacantes->links() }}
     </div>
 </div>
+
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="sweetalert2.all.min.js"></script> --}}
+
+    <script>
+        Livewire.on('mostrarAlerta', vacanteId => {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'No podrás revertir esto',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if(result.isConfirmed){
+                    // Livewire.emit('eliminarVacante') versiones anteriores de livewire
+                    @this.call('eliminarVacante', vacanteId);
+                    Swal.fire(
+                        'Se eliminó la Vacante',
+                        'Eliminado Correctamente',
+                        'success'
+                    )
+                }
+            });
+        })
+    </script>
+@endpush
