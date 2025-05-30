@@ -14,6 +14,7 @@ class VacanteController extends Controller
     public function index()
     {
         //
+        $this->authorize('viewAny', Vacante::class); // nueva forma usando Gate de facades
         return view('vacantes.index');
     }
 
