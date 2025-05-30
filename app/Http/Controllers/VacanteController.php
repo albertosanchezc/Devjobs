@@ -24,6 +24,7 @@ class VacanteController extends Controller
     public function create()
     {
         //
+        $this->authorize('create', Vacante::class); // nueva forma usando Gate de facades
         return view('vacantes.create');
     }
 
