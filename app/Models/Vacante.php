@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Vacante extends Model
 {
     //
-    protected $casts = [ 'ultimo_dia'=>'date'];
+    protected $casts = ['ultimo_dia' => 'date'];
     protected $fillable = [
         'titulo',
         'salario_id',
@@ -22,7 +22,6 @@ class Vacante extends Model
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
-
     }
 
     public function salario()
@@ -30,8 +29,13 @@ class Vacante extends Model
         return $this->belongsTo(Salario::class);
     }
 
-        public function candidatos()
+    public function candidatos()
     {
         return $this->hasMany(Candidato::class);
+    }
+
+    public function reclutador()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
