@@ -25,6 +25,9 @@ class HomeVacantes extends Component
         $vacantes = Vacante::when($this->termino, function ($query) {
             $query->where('titulo', 'LIKE', "%" . $this->termino . "%");
         })
+            ->when($this->termino, function($query){
+                $query->orwhere('empresa', 'LIKE', "%" . $this->termino ."%");
+            })
             ->when($this->categoria, function ($query) {
                 $query ->where('categoria_id', $this->categoria);
             })
