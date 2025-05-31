@@ -17,15 +17,21 @@ class HomeVacantes extends Component
         $this->termino = $termino;
         $this->categoria = $categoria;
         $this->salario = $salario;
-        
     }
 
     public function render()
     {
         // $vacantes = Vacante::all();
-        $vacantes = Vacante::when($this->termino, function($query){
+        $vacantes = Vacante::when($this->termino, function ($query) {
             $query->where('titulo', 'LIKE', "%" . $this->termino . "%");
-        })->paginate(20);
+        })
+            ->when($this->categoria, function ($query) {
+                $query ->where('categoria_id', $this->categoria);
+            })
+            ->when($this->salario, function ($query) {
+                $query ->where('salario_id', $this->salario);
+            })
+            ->paginate(20);
 
         return view('livewire.home-vacantes', [
             'vacantes' => $vacantes
